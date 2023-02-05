@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      @import url("style.css") screen;
+    </style>
+</head>
+<body>
+  <body style="width: auto; height: 100vw;" oncontextmenu="return false"></body>
+  <div id="test">
+  <div id="audio-player" class="overlay">
+    <h2 style="font-size:1vw; border-Radius: 5vw; padding: 1vh 1vw;" title="open youtube" id="artist" onclick="openyoutube('song.wav','lol')">Align - Town</h2>
+    <img id="song-thumbnail" src="assets/image.png" alt="Song Thumbnail">
+    <input style="height: 1.1vh" type="range" id="song-position-slider" class="song-position-slider" value="0">
+    <audio id="audio" src="assets/song.wav"></audio>
+    <h1 style="font-size:1vw;" id="current-Time">0:00</h1>
+    <input style="height: 1.1vh" class="slider" type="range" title="change volume" id="song-volume-slider" step="1" min="0" max="100" value="90"/>
+    <h3 style="font-size:1.6vw; border-Radius: 5vw; padding: 0.8vh 1vw;" title="Play song" id="play-pause-button">Play</h3>
+  </div>
+  <img id="mode" src="assets/whitemode.png" alt="mode">
+</div>
+
+  <script>
+    const audio = document.querySelector('#audio');
+    const audioplayer = document.querySelector('#audio-player');
+    const playPauseButton = document.querySelector('#play-pause-button');
+    const songPositionSlider = document.querySelector('#song-position-slider');
+    const songvolumeslider = document.querySelector('#song-volume-slider');
+    const timeDisplay = document.getElementById("current-Time");
+    const cover = document.getElementById('song-thumbnail');
+    const artist = document.getElementById('artist');
+    const overlay = document.getElementById('test');
+    const mode = document.querySelector('#mode');
+    const body = document.querySelector('body, html');
+    var mode2 = "dark";
+
+    overlay.addEventListener("animationend", function() {
+      console.log(lol);
+		  overlay.style.opacity = 1;
+    });
+
+    setInterval(function() {
+        let currtime = Math.round(audio.duration * (songPositionSlider.value / 100));
+        if(currtime == "107") {
+          audio.pause()
+          playPauseButton.innerText = 'Play';
+          audio.currentTime = 0
+        }
+        timeDisplay.textContent = fancyTimeFormat(currtime)
+        if(screen.width > screen.height) {
+          cover.style = "width: 36%; margin-bottom: 1%"
+          playPauseButton.style ="font-size:1.6vw; border-Radius: 5vw; padding: 0.8vh 1vw; margin-bottom: 1%"
+          if(mode2 == "dark") {
+            artist.style ="font-size:1.6vw; border-Radius: 5vw; padding: 0.8vh 1vw; margin-bottom: 1%;color: rgb(192, 192, 192)"
+            songPositionSlider.style = "height: 1.1vh; width: 36%; margin-bottom: 1%; background: linear-gradient(0.25turn, #6d6d6d, #5e5e5e)"
+            songvolumeslider.style = "height: 1.1vh; width:10%; margin-bottom: 1%; background: linear-gradient(0.25turn, #6d6d6d, #5e5e5e)"
+            document.body.style.background = "overflow: scroll; background: linear-gradient(217deg, rgb(129, 0, 189), rgba(255,0,0,0) 70.71%),linear-gradient(127deg, rgb(65, 0, 109), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgb(0, 89, 116), rgba(0,0,255,0) 83.71%)"
+          } else {
+            artist.style ="font-size:1.6vw; border-Radius: 5vw; padding: 0.8vh 1vw; margin-bottom: 1%;color: rgb(30, 30, 30)"
+            songPositionSlider.style = "height: 1.1vh; width: 36%; margin-bottom: 1%; background: linear-gradient(0.25turn, #424242, #303030);"
+            songvolumeslider.style = "height: 1.1vh; width:10%; margin-bottom: 1%; background: linear-gradient(0.25turn, #424242, #303030);"
+            document.body.style.background = "overflow: scroll; background: linear-gradient(217deg, rgb(229, 206, 255), rgba(255,0,0,0) 70.71%),linear-gradient(127deg, rgb(197, 159, 223), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgb(176, 220, 233), rgba(0,0,255,0) 83.71%)"
+          }
+          timeDisplay.style = "font-size:1vw; margin-top: 6%"
+          mode.style = "width: 3vw; height: auto;  left: 1vh; top: calc(99vh - 3vw);"
+        } 
+        else {
+          cover.style = "width: 100%; margin-bottom: 3%"
+          playPauseButton.style ="font-size:6vw; border-Radius: 50vw; padding: 1.6vh 5vw"
+          if(mode2 == "dark") {
+            artist.style ="font-size:6vw; border-Radius: 50vw; padding: 1.6vh 5vw;color: rgb(192, 192, 192)"
+            songPositionSlider.style = "height: 1.1vh; width: 100%;margin-bottom: 3%; background: linear-gradient(0.25turn, #6d6d6d, #5e5e5e)"
+            songvolumeslider.style = "height: 1.1vh; width: 25%; margin-bottom: 3%; background: linear-gradient(0.25turn, #6d6d6d, #5e5e5e)"
+            document.body.style = "overflow: scroll; background: linear-gradient(217deg, rgb(129, 0, 189), rgba(255,0,0,0) 70.71%),linear-gradient(127deg, rgb(65, 0, 109), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgb(0, 89, 116), rgba(0,0,255,0) 83.71%)"
+          } else {
+            artist.style ="font-size:6vw; border-Radius: 50vw; padding: 1.6vh 5vw;color: rgb(30, 30, 30)"
+            songPositionSlider.style = "height: 1.1vh; width: 100%;margin-bottom: 3%; background: linear-gradient(0.25turn, #424242, #303030);"
+            songvolumeslider.style = "height: 1.1vh; width: 25%; margin-bottom: 3%; background: linear-gradient(0.25turn, #424242, #303030);"
+            document.body.style = "overflow: scroll; background: linear-gradient(217deg, rgb(229, 206, 255), rgba(255,0,0,0) 70.71%),linear-gradient(127deg, rgb(197, 159, 223), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgb(176, 220, 233), rgba(0,0,255,0) 83.71%)"
+          }
+          timeDisplay.style = "font-size:3vw; margin-top: 27%"
+          mode.style = "width: 6vw; height: auto;  left: 1vh; top: calc(99vh - 6vw);"
+        }
+    }, 100);
+
+    mode.addEventListener('click', () => {
+      if(mode2 == "dark") {
+        mode2 = "white";
+        document.getElementById("mode").src="assets/darkmode.png";
+        document.body.style.background = "linear-gradient(217deg, rgb(229, 206, 255), rgba(255,0,0,0) 70.71%),linear-gradient(127deg, rgb(197, 159, 223), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgb(176, 220, 233), rgba(0,0,255,0) 83.71%)"
+        artist.style.color = rgb(30, 30, 30)
+        songPositionSlider.style = "background: linear-gradient(0.25turn, #424242, #303030);"
+      } else {
+        mode2 = "dark";
+        document.getElementById("mode").src="assets/whitemode.png";
+        document.body.style.background = "linear-gradient(217deg, rgb(129, 0, 189), rgba(255,0,0,0) 70.71%),linear-gradient(127deg, rgb(65, 0, 109), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgb(0, 89, 116), rgba(0,0,255,0) 83.71%)"
+        artist.style.color = rgb(192, 192, 192)
+        songPositionSlider.style = "background: linear-gradient(0.25turn, #6d6d6d, #5e5e5e);"
+      }
+    });
+    
+    function openyoutube() {
+      window.open('https://youtu.be/R6JKr8xeAGo');
+    }
+
+    playPauseButton.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play(); 
+        playPauseButton.innerText = 'Pause';
+      } else {
+        audio.pause()
+        playPauseButton.innerText = 'Play';
+      }
+    });
+
+    document.body.onkeyup = function(e) {
+      if (e.key == " " ||
+      e.code == "Space" ||      
+      e.keyCode == 32      
+      ) {
+        if (audio.paused) {
+          audio.play();
+          playPauseButton.innerText = 'Pause';
+        } else {
+          audio.pause()
+          playPauseButton.innerText = 'Play';
+      }
+      }
+    }
+
+    songPositionSlider.addEventListener('input', () => {
+      audio.currentTime = audio.duration * (songPositionSlider.value / 100);
+    });
+
+    songvolumeslider.addEventListener('input', () => {
+      audio.volume = songvolumeslider.value / 100;
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      songPositionSlider.value = (audio.currentTime / audio.duration) * 100;
+    });
+    
+    function fancyTimeFormat(duration) {
+      const hrs = ~~(duration / 3600);
+      const mins = ~~((duration % 3600) / 60);
+      const secs = ~~duration % 60;
+      let ret = "";
+      if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+      }
+      ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+      ret += "" + secs;
+      return ret;
+    }
+  </script>
+</body>
+</html>
